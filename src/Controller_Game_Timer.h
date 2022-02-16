@@ -11,10 +11,9 @@ if player makes it to withing <24 inches oof the game, player can move at will u
 
 
 */
-
-#include "Controller_Game_Settings.h"
-#include "Controller_Game_Updater.h"
-#include "Controller_Input_Hardware.h"
+#include "Settings_Game.h"
+#include "Controller_Buttons.h"
+#include "Controller_Pixels.h"
 
 unsigned long upTime; //track current uptime
 unsigned long currentMillis;

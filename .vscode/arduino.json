@@ -3,6 +3,6 @@
     "board": "arduino:avr:nano",
     "port": "COM11",
     "programmer": "arduino:arduinoisporg",
-    "sketch": "com.nygch.hypex\\com.nygch.hypex.ino",
+    "sketch": "com.nygch.hypex.ino",
     "output": "./builds"
 }

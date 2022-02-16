@@ -31,15 +31,6 @@ TODO:
 #define SCOREZONE_C_SENSOR_1_PIN 7
 #define SCOREZONE_C_SENSOR_2_PIN 8
 
-//const byte
-//    startButton_PIN(BUTTON_1_PIN),
-//    scorezone_A_Sensor_1(SCOREZONE_A_SENSOR_1_PIN),
-//    scorezone_A_Sensor_2(SCOREZONE_A_SENSOR_2_PIN),
-//    scorezone_B_Sensor_1(SCOREZONE_B_SENSOR_1_PIN),
-//    scorezone_B_Sensor_2(SCOREZONE_B_SENSOR_2_PIN),
-//   scorezone_C_Sensor_1(SCOREZONE_C_SENSOR_1_PIN),
-//    scorezone_C_Sensor_2(SCOREZONE_C_SENSOR_2_PIN);
-
 //construct score zone laser sensors as 'button object' (JC_Button.h)
 Button startButton(startButton_PIN);                   // construct the button
 Button scorezone_A_Sensor_1(SCOREZONE_A_SENSOR_1_PIN); // construct the button

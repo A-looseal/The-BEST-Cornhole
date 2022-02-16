@@ -17,50 +17,51 @@ unsigned int alert_Green_OKAY = 250;
 unsigned int alert_Blue_OKAY = 10;
 
 /* Declare the NeoPixel strip object:
-*     * Argument 1 = Number of LEDs in the LED strip
-*     * Argument 2 = Arduino pin number
-*     * Argument 3 = LED strip color order
-*
-* The FastLED_NeoPixel version uses template arguments instead of function
-* arguments. Note the use of '<>' brackets!
-*
-* You can switch between libraries by commenting out one of these two objects.
-* In this example they should behave identically.
-*/
+ *     * Argument 1 = Number of LEDs in the LED strip
+ *     * Argument 2 = Arduino pin number
+ *     * Argument 3 = LED strip color order
+ *
+ * The FastLED_NeoPixel version uses template arguments instead of function
+ * arguments. Note the use of '<>' brackets!
+ *
+ * You can switch between libraries by commenting out one of these two objects.
+ * In this example they should behave identically.
+ */
 // Adafruit_NeoPixel strip(NUM_LEDS, DATA_PIN, NEO_GRB);  // <- Adafruit NeoPixel version
 FastLED_NeoPixel<NUM_LEDS, DATA_PIN, NEO_GRB> strip; // <- FastLED NeoPixel version
 
-/***********
- *FUNCTIONS*
- ***********/
+/**************
+ *CONTROLLERS*
+ **************/
+
 /*
-* Blanks the LEDs and waits for a short time.
+Blanks the LEDs and waits for a short time.
+example: colorWipe(strip.Color(255, 255, 255), 25);  // white
 */
-//example: colorWipe(strip.Color(255, 255, 255), 25);  // white
 void blank(unsigned long wait)
 {
 	strip.clear();
 	strip.show();
 	delay(wait);
-} //blank end
+} // blank end
 
 void colorWipe(uint32_t color, unsigned long wait)
-{ //can use this to display time countdown
+{ 
 	for (unsigned int i = 0; i < strip.numPixels(); i++)
 	{
 		strip.setPixelColor(i, color);
 		strip.show();
 		delay(wait);
 	}
-} //colorWipe end
+} // colorWipe end
 
 /*
-* Simple rainbow animation, iterating through all 8-bit hues. LED color changes
-* based on position in the strip. Takes two arguments:
-* 
-*     1. the amount of time to wait between frames
-*     2. the number of rainbows to loop through
-*/
+ * Simple rainbow animation, iterating through all 8-bit hues. LED color changes
+ * based on position in the strip. Takes two arguments:
+ *
+ *     1. the amount of time to wait between frames
+ *     2. the number of rainbows to loop through
+ */
 void rainbow(unsigned long wait, unsigned int numLoops)
 {
 	for (unsigned int count = 0; count < numLoops; count++)
@@ -77,9 +78,9 @@ void rainbow(unsigned long wait, unsigned int numLoops)
 			delay(wait);
 		}
 	}
-} //rainbow end
+} // rainbow end
 
-//c = amount of times to blink LED's | s = how fast to blink the leds | w = amount of time to wait between blinks | r = amount of red | g = amount of green | b = amount of blue
+// c = amount of times to blink LED's | s = how fast to blink the leds | w = amount of time to wait between blinks | r = amount of red | g = amount of green | b = amount of blue
 void alert_Template(unsigned int c, unsigned int s, unsigned long w, unsigned int r, unsigned int g, unsigned int b)
 {
 	for (unsigned int i = 0; i < c; i++)
@@ -90,12 +91,29 @@ void alert_Template(unsigned int c, unsigned int s, unsigned long w, unsigned in
 }
 
 void neopixel_Setup()
-{ //setup all neopixel LED's
+{ // setup all neopixel LED's
 	delay(2000);
 	strip.begin(); // initialize strip (required!)
 	strip.setBrightness(BRIGHTNESS);
 	Serial.println("Neopixel setup complete");
-	Serial.println("\t"); //tab
+	Serial.println("\t"); // tab
 
-	alert_Template(alert_Count_OKAY, alert_Speed_OKAY, alert_Wait_OKAY, alert_Red_OKAY, alert_Green_OKAY, alert_Blue_OKAY); //alert| 3 blinks | fast | green
-} //setup end
+	alert_Template(alert_Count_OKAY, alert_Speed_OKAY, alert_Wait_OKAY, alert_Red_OKAY, alert_Green_OKAY, alert_Blue_OKAY); // alert| 3 blinks | fast | green
+} // setup end
+
+/**********
+ *UPDATERS*
+ **********/
+
+//update pixels with amount of time left | started: 22.2.15
+void update_Pixels_With_Current_Duration(unsigned long time,unsigned long fromLow,unsigned long FromHigh,unsigned long ToLow,unsigned long ToHigh)
+{
+
+    // map current game duration to amount of neopixels in a single score zone (22) for display pourposes
+    unsigned long elapsed_TimeDuration_mapped = map(time, fromLow, FromHigh, ToLow, ToHigh);
+    // set strip position and color //display elapsed time to pixels
+    strip.setPixelColor(elapsed_TimeDuration_mapped, strip.Color(0, 200, 250));
+    // update strip with new values
+    strip.show();
+
+} ////finished: 22.2.15
